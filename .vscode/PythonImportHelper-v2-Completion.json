@@ -1,0 +1,152 @@
+[
+    {
+        "label": "yaml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "string",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "string",
+        "description": "string",
+        "detail": "string",
+        "documentation": {}
+    },
+    {
+        "label": "ssh_checkout",
+        "importPath": "sshcheckers",
+        "description": "sshcheckers",
+        "isExtraImport": true,
+        "detail": "sshcheckers",
+        "documentation": {}
+    },
+    {
+        "label": "upload_files",
+        "importPath": "sshcheckers",
+        "description": "sshcheckers",
+        "isExtraImport": true,
+        "detail": "sshcheckers",
+        "documentation": {}
+    },
+    {
+        "label": "ssh_checkout",
+        "importPath": "sshcheckers",
+        "description": "sshcheckers",
+        "isExtraImport": true,
+        "detail": "sshcheckers",
+        "documentation": {}
+    },
+    {
+        "label": "paramiko",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "paramiko",
+        "description": "paramiko",
+        "detail": "paramiko",
+        "documentation": {}
+    },
+    {
+        "label": "create_deploy",
+        "kind": 2,
+        "importPath": "conftest",
+        "description": "conftest",
+        "peekOfCode": "def create_deploy():\n    res = []\n    upload_files(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                 f'{data.get(\"folder_in\")}{data.get(\"file\")}.deb',\n                 f'{data.get(\"path_user\")}{data.get(\"file\")}.deb')\n    res.append(ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                            f'echo {data.get(\"pswd\")} | sudo -S dpkg -i {data.get(\"path_user\")}{data.get(\"file\")}.deb',\n                            \"Настраивается пакет\"))\n    res.append(ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                            f'echo {data.get(\"pswd\")} | sudo -S dpkg -s {data.get(\"file\")}',",
+        "detail": "conftest",
+        "documentation": {}
+    },
+    {
+        "label": "make_folders",
+        "kind": 2,
+        "importPath": "conftest",
+        "description": "conftest",
+        "peekOfCode": "def make_folders():\n    return ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                        f'mkdir -p {data.get(\"folder_user_in\")} {data.get(\"folder_user_out\")} {data.get(\"folder_user_ex\")}',\n                        '')\n@pytest.fixture(scope='class')\ndef delete_folders():\n    yield\n    return ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                        f'rm -rf {data.get(\"folder_user_in\")} {data.get(\"folder_user_out\")} {data.get(\"folder_user_ex\")}',\n                        '')",
+        "detail": "conftest",
+        "documentation": {}
+    },
+    {
+        "label": "delete_folders",
+        "kind": 2,
+        "importPath": "conftest",
+        "description": "conftest",
+        "peekOfCode": "def delete_folders():\n    yield\n    return ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                        f'rm -rf {data.get(\"folder_user_in\")} {data.get(\"folder_user_out\")} {data.get(\"folder_user_ex\")}',\n                        '')\n@pytest.fixture(scope='class')\ndef make_files():\n    list_of_files = []\n    for i in range(data.get(\"count\")):\n        filename = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))",
+        "detail": "conftest",
+        "documentation": {}
+    },
+    {
+        "label": "make_files",
+        "kind": 2,
+        "importPath": "conftest",
+        "description": "conftest",
+        "peekOfCode": "def make_files():\n    list_of_files = []\n    for i in range(data.get(\"count\")):\n        filename = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))\n        if ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                        f' cd {data.get(\"folder_user_in\")}; dd if=/dev/urandom of={filename} bs={data.get(\"bs\")} '\n                        f' count=1', ''):\n            list_of_files.append(filename)\n    return list_of_files\n@pytest.fixture(scope='class')",
+        "detail": "conftest",
+        "documentation": {}
+    },
+    {
+        "label": "delete_deploy",
+        "kind": 2,
+        "importPath": "conftest",
+        "description": "conftest",
+        "peekOfCode": "def delete_deploy():\n    yield\n    return ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                        f'echo {data.get(\"pswd\")} | sudo -S dpkg -r {data.get(\"file\")}', \"Удаляется\")",
+        "detail": "conftest",
+        "documentation": {}
+    },
+    {
+        "label": "ssh_checkout",
+        "kind": 2,
+        "importPath": "sshcheckers",
+        "description": "sshcheckers",
+        "peekOfCode": "def ssh_checkout(host, user, passwd, cmd, text, port=22):\n    client = paramiko.SSHClient()\n    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    client.connect(hostname=host, username=user, password=passwd, port=port)\n    stdin, stdout, stderr = client.exec_command(cmd)\n    exit_code = stdout.channel.recv_exit_status()\n    out = (stdout.read() + stderr.read()).decode(\"utf-8\")\n    client.close()\n    if text in out and exit_code == 0:\n        return True",
+        "detail": "sshcheckers",
+        "documentation": {}
+    },
+    {
+        "label": "upload_files",
+        "kind": 2,
+        "importPath": "sshcheckers",
+        "description": "sshcheckers",
+        "peekOfCode": "def upload_files(host, user, passwd, local_path, remote_path, port=22):\n    print(f\"Загружаем файл {local_path} в каталог {remote_path}\")\n    transport = paramiko.Transport((host, port))\n    transport.connect(None, username=user, password=passwd)\n    sftp = paramiko.SFTPClient.from_transport(transport)\n    sftp.put(local_path, remote_path)\n    if sftp:\n        sftp.close()\n    if transport:\n        transport.close()",
+        "detail": "sshcheckers",
+        "documentation": {}
+    },
+    {
+        "label": "ssh_checkout_negative",
+        "kind": 2,
+        "importPath": "sshcheckers",
+        "description": "sshcheckers",
+        "peekOfCode": "def ssh_checkout_negative(host, user, passwd, cmd, text, port=22):\n    client = paramiko.SSHClient()\n    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    client.connect(hostname=host, username=user, password=passwd, port=port)\n    stdin, stdout, stderr = client.exec_command(cmd)\n    exit_code = stdout.channel.recv_exit_status()\n    out = (stdout.read() + stderr.read()).decode(\"utf-8\")\n    client.close()\n    if text in out and exit_code != 0:\n        return True",
+        "detail": "sshcheckers",
+        "documentation": {}
+    },
+    {
+        "label": "TestHW",
+        "kind": 6,
+        "importPath": "test_deploy",
+        "description": "test_deploy",
+        "peekOfCode": "class TestHW:\n    def test_step_1(self):\n        assert ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                            f'cd {data.get(\"folder_user_in\")}; 7z -t{data.get(\"type\")} a {data.get(\"folder_user_out\")}/archive_1',\n                            'Everything is Ok')\n    def test_step_2(self):\n        assert ssh_checkout(f'{data.get(\"host\")}', f'{data.get(\"user\")}', f'{data.get(\"pswd\")}',\n                            f'cd {data.get(\"folder_user_out\")}; 7z x archive_1.{data.get(\"type\")} -o{data.get(\"folder_user_ex\")} -y',\n                            'Everything is Ok')\nif __name__ == '__main__':",
+        "detail": "test_deploy",
+        "documentation": {}
+    }
+]
